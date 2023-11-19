@@ -8,10 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
@@ -23,9 +21,13 @@ public class MainController implements Initializable {
 
     @FXML
     MenuItem File_Open;
+    @FXML
+    MenuItem File_New;
 
     @FXML
     TabPane Tab_Pane;
+    @FXML
+    Tab Tab_Monday;
     @FXML
     TableView<Product> Monday_TableView;
     @FXML
@@ -58,11 +60,21 @@ public class MainController implements Initializable {
             List<Product> list = new ArrayList<>();
             File file = FileHelper.chooseFile();
             list = JsonHelper.readOrderJson(file);
-            Tab_Pane.getSelectionModel().getSelectedItem();
+            Tab tab = Tab_Pane.getSelectionModel().getSelectedItem();
+
+            //TODO JUICY SWITCH CASE
+            //switch (tab.getId()) {
+                //case "Tab_Monday":
+            //}
+
+
             ObservableList<Product> table_list = Monday_TableView.getItems();
             table_list.clear();
             table_list.addAll(list);
             Monday_TableView.setItems(table_list);
+        }
+        if(event.getSource() == File_New) {
+
         }
     }
 }

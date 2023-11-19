@@ -49,7 +49,7 @@
       <menus>
         <Menu fx:id="menu_file" mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem fx:id="File_New" mnemonicParsing="false" onAction="#onMenuAction" text="New" />
             <MenuItem fx:id="File_Open" mnemonicParsing="false" onAction="#onMenuAction" text="Open…" />
             <Menu mnemonicParsing="false" text="Open Recent" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -89,7 +89,7 @@
     </MenuBar>
       <TabPane fx:id="Tab_Pane" prefHeight="873.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="tab_monday" text="Monday">
+          <Tab fx:id="Tab_Monday" text="Monday">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

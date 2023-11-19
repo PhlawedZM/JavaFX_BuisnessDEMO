@@ -12,6 +12,7 @@ import java.util.List;
 public class JsonHelper {
 
     public static List<Product> readOrderJson(File file){
+        //TODO Make backup files incase they click wrong file.
         List<Product> list = new ArrayList<>();
         ObjectMapper map = new ObjectMapper();
 

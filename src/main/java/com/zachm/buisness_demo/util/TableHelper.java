@@ -22,7 +22,7 @@ public class TableHelper {
         tableView.setEditable(true);
         backstock.setEditable(true);
     }
-    public static void getAndSetTab(TabPane pane) {
+    public static void getAndSetTable(TabPane pane) {
         //TODO We will access this a lot.
         pane.getSelectionModel().getSelectedItem();
     }
