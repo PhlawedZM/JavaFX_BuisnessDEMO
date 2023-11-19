@@ -19,6 +19,11 @@ public class MainApplication extends Application {
         stage.show();
         //JsonHelper.createTestOrderJson();
         //JsonHelper.readOrderJson();
+
+        //TODO 1: Finish Menu
+        //TODO 2: Add Removal and Adding Order to Order List
+        //TODO 3: Add Temp Files so you dont always have to open files. This is the biggest QOL
+        //TODO 4: Add Themes
     }
 
     public static void main(String[] args) {

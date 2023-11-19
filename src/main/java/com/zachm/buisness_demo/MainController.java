@@ -45,9 +45,6 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TableHelper.setTable(Monday_TableView, Monday_Vendor, Monday_Product, Monday_Case, Monday_Sales, Monday_Backstock, Monday_Order);
 
-        //ObservableList<Product> list = Monday_TableView.getItems();
-        //list.add(new Product("Mitica", "Parmesan", 24, 77, 0, 21));
-        //Monday_TableView.setItems(list);
     }
     public void onCommit(TableColumn.CellEditEvent<Product, Integer> event) {
         //TODO make a new TextFieldCell that only accepts Integers
@@ -66,7 +63,6 @@ public class MainController implements Initializable {
             table_list.clear();
             table_list.addAll(list);
             Monday_TableView.setItems(table_list);
-
         }
     }
 }
