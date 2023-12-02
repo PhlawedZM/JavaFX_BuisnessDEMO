@@ -5,8 +5,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Properties;
 
 public class FileHelper{
+
+    //TODO Open Recent Memory...
+    private Properties prop;
 
     public static File chooseFile(){
         FileChooser finder = new FileChooser();

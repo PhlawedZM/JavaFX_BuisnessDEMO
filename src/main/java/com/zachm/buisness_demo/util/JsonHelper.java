@@ -10,7 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonHelper {
-
+    /**
+     * Reads Json Made for Order
+     * Ideally this would be made automatic through a database online
+     * You can do this by connecting with JDBC and then connecting with ObjectMapper.ReadTree(URL);
+     */
     public static List<Product> readOrderJson(File file){
         //TODO Make backup files incase they click wrong file.
         List<Product> list = new ArrayList<>();
@@ -32,9 +36,10 @@ public class JsonHelper {
         return list;
     }
 
+    /**
+     * Creates a json file for testing
+     */
     public static void createTestOrderJson(){
-        //I used my D: Drive to as the test directory. Make sure to change it to where you want it.
-
         ObjectMapper map = new ObjectMapper();
         File file = new File("D://test.json");
         List<Product> list = new ArrayList<>();

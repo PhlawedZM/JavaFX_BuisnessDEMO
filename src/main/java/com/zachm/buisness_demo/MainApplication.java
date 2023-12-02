@@ -18,7 +18,6 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.show();
         //JsonHelper.createTestOrderJson();
-        //JsonHelper.readOrderJson();
 
         //TODO 1: Finish Menu
         //TODO 2: Add Removal and Adding Order to Order List

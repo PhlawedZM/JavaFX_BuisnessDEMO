@@ -49,11 +49,13 @@
       <menus>
         <Menu fx:id="menu_file" mnemonicParsing="false" text="File">
           <items>
-            <MenuItem fx:id="File_New" mnemonicParsing="false" onAction="#onMenuAction" text="New" />
             <MenuItem fx:id="File_Open" mnemonicParsing="false" onAction="#onMenuAction" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
+                  <Menu fx:id="File_OpenRecent" mnemonicParsing="false" text="Open Recent...">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
             <MenuItem mnemonicParsing="false" text="Save" />
             <MenuItem mnemonicParsing="false" text="Save As…" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -76,7 +78,6 @@
         </Menu>
             <Menu mnemonicParsing="false" text="List">
               <items>
-                <MenuItem mnemonicParsing="false" text="Open" />
                   <MenuItem mnemonicParsing="false" text="Create" />
               </items>
             </Menu>

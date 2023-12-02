@@ -10,6 +10,9 @@ public class Product {
     private int order;
     private int days;
 
+    /**
+     * Basic json class with logic for our ordering app.
+     */
     public Product(String vendor, String product, int quantity, int sales, int backstock, int days) {
         this.vendor = vendor;
         this.product = product;
@@ -24,7 +27,7 @@ public class Product {
 
         //This is based on weekly sales
         //We can divide this by 7 to bring it to its daily sales
-        //This is useful because lets say an order is an odd amount of days, we can multiply it to get our order
+        //This is useful because let's say an order is an odd amount of days, we can multiply it to get our order
         //Put it into two parts for readability.
         double maths = ((double)sales/(double)quantity)/7 * days;
         int math = (int) Math.ceil(maths - backstock);

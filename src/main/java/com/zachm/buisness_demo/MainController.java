@@ -22,7 +22,7 @@ public class MainController implements Initializable {
     @FXML
     MenuItem File_Open;
     @FXML
-    MenuItem File_New;
+    Menu File_OpenRecent;
 
     @FXML
     TabPane Tab_Pane;
@@ -43,16 +43,29 @@ public class MainController implements Initializable {
     @FXML
     TableColumn<Product, Integer> Monday_Order;
 
+    /**
+     * We override the initialize function to apply our tables.
+     * We then use a utility class to save space for readability.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TableHelper.setTable(Monday_TableView, Monday_Vendor, Monday_Product, Monday_Case, Monday_Sales, Monday_Backstock, Monday_Order);
-
+        File_OpenRecent.getItems().clear();
     }
+
+    /**
+     * This event gets fired when any of the Backstock numbers get changed
+     */
     public void onCommit(TableColumn.CellEditEvent<Product, Integer> event) {
-        //TODO make a new TextFieldCell that only accepts Integers
         Product original = event.getTableView().getItems().get(event.getTableView().getItems().indexOf(event.getRowValue()));
-        Product product = new Product(original.getVendor(), original.getProduct(), original.getQuantity(), original.getSales(), event.getNewValue(), original.getDays());
-        event.getTableView().getItems().set(event.getTableView().getItems().indexOf(event.getRowValue()),product);
+        if(event.getNewValue() != null) {
+            Product product = new Product(original.getVendor(), original.getProduct(), original.getQuantity(), original.getSales(), event.getNewValue(), original.getDays());
+            event.getTableView().getItems().set(event.getTableView().getItems().indexOf(event.getRowValue()),product);
+        }
+        else {
+            //TODO Make a window popup explaining only numbers
+            event.getTableView().getItems().set(event.getTableView().getItems().indexOf(event.getRowValue()),original);
+        }
     }
 
     public void onMenuAction(ActionEvent event) {
@@ -62,7 +75,7 @@ public class MainController implements Initializable {
             list = JsonHelper.readOrderJson(file);
             Tab tab = Tab_Pane.getSelectionModel().getSelectedItem();
 
-            //TODO JUICY SWITCH CASE
+            //TODO JUICY switch to get the day of the week | Still need to add the other tables
             //switch (tab.getId()) {
                 //case "Tab_Monday":
             //}
@@ -72,9 +85,6 @@ public class MainController implements Initializable {
             table_list.clear();
             table_list.addAll(list);
             Monday_TableView.setItems(table_list);
-        }
-        if(event.getSource() == File_New) {
-
         }
     }
 }
