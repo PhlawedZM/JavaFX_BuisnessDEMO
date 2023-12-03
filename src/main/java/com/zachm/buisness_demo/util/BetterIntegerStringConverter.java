@@ -28,6 +28,10 @@ public class BetterIntegerStringConverter extends StringConverter<Integer> {
         }
     }
 
+    /**
+     * Part of the params of String Converter
+     * Copy & Pasted the Original
+     */
     @Override
     public String toString(Integer var1) {
         return var1 == null ? "" : Integer.toString(var1);
@@ -35,7 +39,7 @@ public class BetterIntegerStringConverter extends StringConverter<Integer> {
 
     /**
      * Runs a for each to check each character of the string
-     * You can run a regex for this but for loops are more readable.
+     * You can run a regex for this but for loops are more readable
      */
     public static boolean isOnlyDigit(String str) {
         for(char c : str.toCharArray()) {

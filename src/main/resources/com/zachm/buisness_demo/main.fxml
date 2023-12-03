@@ -100,7 +100,7 @@
                             <TableColumn fx:id="Monday_Product" prefWidth="644.0" text="Product" />
                             <TableColumn fx:id="Monday_Case" minWidth="0.0" prefWidth="100.0" text="Case" />
                               <TableColumn fx:id="Monday_Sales" prefWidth="100.0" text="Sales" />
-                              <TableColumn fx:id="Monday_Backstock" onEditCommit="#onCommit" prefWidth="100.0" text="Backstock" />
+                              <TableColumn fx:id="Monday_Backstock" onEditCommit="#onTableAction" prefWidth="100.0" text="Backstock" />
                               <TableColumn fx:id="Monday_Order" prefWidth="138.0" text="Order" />
                           </columns>
                         </TableView>

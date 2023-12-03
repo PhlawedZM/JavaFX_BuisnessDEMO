@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
@@ -54,9 +53,9 @@ public class MainController implements Initializable {
     }
 
     /**
-     * This event gets fired when any of the Backstock numbers get changed
+     * This event gets fired when any of the backstock numbers get changed
      */
-    public void onCommit(TableColumn.CellEditEvent<Product, Integer> event) {
+    public void onTableAction(TableColumn.CellEditEvent<Product, Integer> event) {
         Product original = event.getTableView().getItems().get(event.getTableView().getItems().indexOf(event.getRowValue()));
         if(event.getNewValue() != null) {
             Product product = new Product(original.getVendor(), original.getProduct(), original.getQuantity(), original.getSales(), event.getNewValue(), original.getDays());
@@ -68,14 +67,18 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * This event gets fired whenever we use a menu item
+     */
     public void onMenuAction(ActionEvent event) {
         if(event.getSource() == File_Open) {
             List<Product> list = new ArrayList<>();
             File file = FileHelper.chooseFile();
-            list = JsonHelper.readOrderJson(file);
+            JsonHelper.writeFilePathJson(file);
+            list = JsonHelper.writeOrderJson(file);
             Tab tab = Tab_Pane.getSelectionModel().getSelectedItem();
 
-            //TODO JUICY switch to get the day of the week | Still need to add the other tables
+            //TODO Switch case whenever I add other tables
             //switch (tab.getId()) {
                 //case "Tab_Monday":
             //}
