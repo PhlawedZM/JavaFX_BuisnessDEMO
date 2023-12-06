@@ -26,10 +26,4 @@ public class FileHelper{
         finder.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("JSON File", "*.json"));
         return finder.showOpenDialog(new Stage());
     }
-
-    public static void savePath(File file) {
-        Properties prop = new Properties();
-
-    }
-
 }

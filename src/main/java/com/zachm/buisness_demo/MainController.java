@@ -1,9 +1,6 @@
 package com.zachm.buisness_demo;
 
-import com.zachm.buisness_demo.util.JsonHelper;
-import com.zachm.buisness_demo.util.TableHelper;
-import com.zachm.buisness_demo.util.FileHelper;
-import com.zachm.buisness_demo.util.Product;
+import com.zachm.buisness_demo.util.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,10 +8,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 
 public class MainController implements Initializable {
 
@@ -48,8 +48,49 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initializeTables();
+        initializeMenus();
+        initializeTabs();
+    }
+
+    public void initializeTables() {
         TableHelper.setTable(Monday_TableView, Monday_Vendor, Monday_Product, Monday_Case, Monday_Sales, Monday_Backstock, Monday_Order);
+    }
+
+    public void initializeTabs() {
+        LocalDate date = LocalDate.now();
+
+        LocalDate Sunday = date.minusDays(date.getDayOfWeek().getValue());
+
+        //TODO For loop to set dates for all tabs
+        Tab_Monday.setText("Monday " + "(" + Sunday.plusDays(1).getMonth().getValue() + "/" + Sunday.plusDays(1).getDayOfMonth() + ")");
+    }
+
+    /**
+     * Logic for our menu
+     * This is where our memory for Open Recent is utilized
+     */
+    public void initializeMenus() {
         File_OpenRecent.getItems().clear();
+
+        FilePath paths = JsonHelper.readFilePathJson();
+        int index = 0;
+
+        if(paths.containsPaths()) {
+            paths.getPaths().forEach(path -> {
+                try {
+                    File file = new File(path);
+                    MenuItem menu = new MenuItem();
+                    menu.setText(file.getName());
+                    menu.setOnAction(this::onMenuAction);
+                    File_OpenRecent.getItems().add(menu);
+                    
+                } catch (Exception e) {
+                    //TODO Remove from list/use backup
+                    System.out.println("Cant find file!");
+                }
+            });
+        }
     }
 
     /**
@@ -74,8 +115,13 @@ public class MainController implements Initializable {
         if(event.getSource() == File_Open) {
             List<Product> list = new ArrayList<>();
             File file = FileHelper.chooseFile();
-            JsonHelper.writeFilePathJson(file);
-            list = JsonHelper.writeOrderJson(file);
+
+            //If canceled/closed it is null, we check if it isn't
+            if(file != null) {
+                JsonHelper.writeFilePathJson(file);
+                list = JsonHelper.readOrderJson(file);
+            }
+
             Tab tab = Tab_Pane.getSelectionModel().getSelectedItem();
 
             //TODO Switch case whenever I add other tables
@@ -84,10 +130,26 @@ public class MainController implements Initializable {
             //}
 
 
+            //TEMP CODE
             ObservableList<Product> table_list = Monday_TableView.getItems();
             table_list.clear();
             table_list.addAll(list);
             Monday_TableView.setItems(table_list);
+        }
+        if(event.getSource() instanceof MenuItem) {
+            Menu parent = ((MenuItem) event.getSource()).getParentMenu();
+            List<Product> list = new ArrayList<>();
+
+            if(parent == File_OpenRecent) {
+                //TODO Ran out of time, but we get the file here from a list in initialize.
+                //list = JsonHelper.readOrderJson(file);
+
+                //TEMP CODE
+                ObservableList<Product> table_list = Monday_TableView.getItems();
+                table_list.clear();
+                table_list.addAll(list);
+                Monday_TableView.setItems(table_list);
+            }
         }
     }
 }

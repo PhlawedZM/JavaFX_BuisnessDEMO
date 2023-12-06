@@ -1,0 +1,28 @@
+.root {
+
+}
+.menu-bar {
+    -fx-background-color: #202324;
+}
+
+.tab-pane {
+    -fx-background-color: #313436;
+}
+
+.tab-header-background {
+    -fx-background-color: #3a3c3d;
+}
+.tab {
+    -fx-background-color: #EF2D56;
+}
+.tab:hover {
+    -fx-background-color: #768185;
+}
+.tab-label {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-family: 'Montserrat';
+}
+.tab:selected {
+    -fx-background-color: #768185;
+}

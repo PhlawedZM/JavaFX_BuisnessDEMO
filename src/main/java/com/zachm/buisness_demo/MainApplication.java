@@ -18,9 +18,10 @@ public class MainApplication extends Application {
      * Application class, this is our main class.
      */
     @Override
-    public void start(Stage stage) throws IOException, URISyntaxException {
+    public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        //scene.getStylesheets().add(MainApplication.class.getResource("main_dark.css").toExternalForm());
         stage.setTitle("Order App");
         stage.setScene(scene);
         stage.show();

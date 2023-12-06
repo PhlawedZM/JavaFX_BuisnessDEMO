@@ -15,15 +15,14 @@ import java.util.List;
 
 public class JsonHelper {
 
-    private static File path_file = new File(MainApplication.directory.getAbsolutePath() + "/files.json");
-    private static int MAX_FILE_PATHS = 10;
+    private static final File path_file = new File(MainApplication.directory.getAbsolutePath() + "/files.json");
 
     /**
      * Reads Json Made for Order
      * Ideally this would be made automatic through a database online
      * You can do this by connecting with JDBC and then connecting with ObjectMapper.ReadTree(URL);
      */
-    public static List<Product> writeOrderJson(File file){
+    public static List<Product> readOrderJson(File file){
         //TODO Make backup files incase they click wrong file.
         List<Product> list = new ArrayList<>();
         ObjectMapper map = new ObjectMapper();
@@ -89,6 +88,7 @@ public class JsonHelper {
 
                 //Could run a for loop here in case of overflow, shouldn't be possible tho.
                 //Might implement it later.
+                int MAX_FILE_PATHS = 10;
                 if (paths.getPaths().size() > MAX_FILE_PATHS) {
                     paths.getPaths().remove(MAX_FILE_PATHS + 1);
                 }
@@ -102,8 +102,6 @@ public class JsonHelper {
             }
 
             try {
-                System.out.println(map.writer().withDefaultPrettyPrinter().writeValueAsString(paths));
-                System.out.println(path_file.getAbsolutePath());
                 map.writer().withDefaultPrettyPrinter().writeValue(path_file, paths);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
