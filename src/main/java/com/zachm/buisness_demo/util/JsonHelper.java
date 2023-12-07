@@ -84,10 +84,9 @@ public class JsonHelper {
             //Check if file doesn't already have it.
             //Just a basic add and removal with our limit.
             if (!paths.getPaths().contains(file.getPath())) {
-                paths.getPaths().add(file.getPath());
+                paths.getPaths().add(0, file.getPath());
 
                 //Could run a for loop here in case of overflow, shouldn't be possible tho.
-                //Might implement it later.
                 int MAX_FILE_PATHS = 10;
                 if (paths.getPaths().size() > MAX_FILE_PATHS) {
                     paths.getPaths().remove(MAX_FILE_PATHS + 1);
@@ -98,7 +97,7 @@ public class JsonHelper {
             //Note that we don't need to use a for loop thinks to how ArrayList<> works.
             else {
                 paths.getPaths().remove(file.getPath());
-                paths.getPaths().add(file.getPath());
+                paths.getPaths().add(0, file.getPath());
             }
 
             try {

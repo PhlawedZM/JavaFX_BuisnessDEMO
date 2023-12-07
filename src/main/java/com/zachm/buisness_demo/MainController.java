@@ -5,15 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 public class MainController implements Initializable {
@@ -26,7 +23,7 @@ public class MainController implements Initializable {
     @FXML
     TabPane Tab_Pane;
     @FXML
-    Tab Tab_Monday;
+    Tab Monday_Tab;
     @FXML
     TableView<Product> Monday_TableView;
     @FXML
@@ -42,6 +39,11 @@ public class MainController implements Initializable {
     @FXML
     TableColumn<Product, Integer> Monday_Order;
 
+
+    private List<File> file_list = new ArrayList<>();
+    private List<Product> list = new ArrayList<>();
+
+
     /**
      * We override the initialize function to apply our tables.
      * We then use a utility class to save space for readability.
@@ -54,6 +56,7 @@ public class MainController implements Initializable {
     }
 
     public void initializeTables() {
+        //TODO set table to scale based on width of app
         TableHelper.setTable(Monday_TableView, Monday_Vendor, Monday_Product, Monday_Case, Monday_Sales, Monday_Backstock, Monday_Order);
     }
 
@@ -63,18 +66,20 @@ public class MainController implements Initializable {
         LocalDate Sunday = date.minusDays(date.getDayOfWeek().getValue());
 
         //TODO For loop to set dates for all tabs
-        Tab_Monday.setText("Monday " + "(" + Sunday.plusDays(1).getMonth().getValue() + "/" + Sunday.plusDays(1).getDayOfMonth() + ")");
+        Monday_Tab.setText("Monday " + "(" + Sunday.plusDays(1).getMonth().getValue() + "/" + Sunday.plusDays(1).getDayOfMonth() + ")");
+    }
+
+    public void initializeMenus() {
+        updateOpenRecent();
     }
 
     /**
-     * Logic for our menu
-     * This is where our memory for Open Recent is utilized
+     * This is where our logic for Open Recent is
      */
-    public void initializeMenus() {
+    public void updateOpenRecent() {
         File_OpenRecent.getItems().clear();
 
         FilePath paths = JsonHelper.readFilePathJson();
-        int index = 0;
 
         if(paths.containsPaths()) {
             paths.getPaths().forEach(path -> {
@@ -84,10 +89,14 @@ public class MainController implements Initializable {
                     menu.setText(file.getName());
                     menu.setOnAction(this::onMenuAction);
                     File_OpenRecent.getItems().add(menu);
-                    
+                    file_list.clear();
+                    file_list.add(file);
+
+                    System.out.println(file);
+
                 } catch (Exception e) {
                     //TODO Remove from list/use backup
-                    System.out.println("Cant find file!");
+                    System.out.println(e.getMessage());
                 }
             });
         }
@@ -103,7 +112,6 @@ public class MainController implements Initializable {
             event.getTableView().getItems().set(event.getTableView().getItems().indexOf(event.getRowValue()),product);
         }
         else {
-            //TODO Make a window popup explaining only numbers
             event.getTableView().getItems().set(event.getTableView().getItems().indexOf(event.getRowValue()),original);
         }
     }
@@ -113,10 +121,11 @@ public class MainController implements Initializable {
      */
     public void onMenuAction(ActionEvent event) {
         if(event.getSource() == File_Open) {
-            List<Product> list = new ArrayList<>();
+            list.clear();
             File file = FileHelper.chooseFile();
 
             //If canceled/closed it is null, we check if it isn't
+            //Adds the file to memory
             if(file != null) {
                 JsonHelper.writeFilePathJson(file);
                 list = JsonHelper.readOrderJson(file);
@@ -126,7 +135,7 @@ public class MainController implements Initializable {
 
             //TODO Switch case whenever I add other tables
             //switch (tab.getId()) {
-                //case "Tab_Monday":
+                //case "Monday_Tab":
             //}
 
 
@@ -135,20 +144,28 @@ public class MainController implements Initializable {
             table_list.clear();
             table_list.addAll(list);
             Monday_TableView.setItems(table_list);
+
+            //TODO This line crashes/low priority
+            //updateOpenRecent();
         }
-        if(event.getSource() instanceof MenuItem) {
-            Menu parent = ((MenuItem) event.getSource()).getParentMenu();
-            List<Product> list = new ArrayList<>();
+
+        if(event.getSource() instanceof MenuItem menu) {
+            Menu parent = menu.getParentMenu();
+
 
             if(parent == File_OpenRecent) {
-                //TODO Ran out of time, but we get the file here from a list in initialize.
-                //list = JsonHelper.readOrderJson(file);
+                file_list.forEach(file -> {
+                    if(file.getName().equals(menu.getText())) {
+                        list.clear();
+                        list = JsonHelper.readOrderJson(file);
 
-                //TEMP CODE
-                ObservableList<Product> table_list = Monday_TableView.getItems();
-                table_list.clear();
-                table_list.addAll(list);
-                Monday_TableView.setItems(table_list);
+                        //TEMP CODE
+                        ObservableList<Product> table_list = Monday_TableView.getItems();
+                        table_list.clear();
+                        table_list.addAll(list);
+                        Monday_TableView.setItems(table_list);
+                    }
+                });
             }
         }
     }
