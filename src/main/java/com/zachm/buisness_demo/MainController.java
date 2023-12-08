@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.net.URL;
@@ -40,7 +41,7 @@ public class MainController implements Initializable {
     TableColumn<Product, Integer> Monday_Order;
 
 
-    private List<File> file_list = new ArrayList<>();
+    private final List<File> file_list = new ArrayList<>();
     private List<Product> list = new ArrayList<>();
 
 
@@ -55,9 +56,18 @@ public class MainController implements Initializable {
         initializeTabs();
     }
 
+    /**
+     * Where we up our tables
+     * This includes our listener for resizing
+     */
     public void initializeTables() {
         //TODO set table to scale based on width of app
         TableHelper.setTable(Monday_TableView, Monday_Vendor, Monday_Product, Monday_Case, Monday_Sales, Monday_Backstock, Monday_Order);
+
+        Monday_TableView.setColumnResizePolicy(resizeFeatures -> {
+            TableHelper.updateTableSize(resizeFeatures.getTable());
+            return true;
+        });
     }
 
     public void initializeTabs() {
@@ -82,6 +92,7 @@ public class MainController implements Initializable {
         FilePath paths = JsonHelper.readFilePathJson();
 
         if(paths.containsPaths()) {
+            file_list.clear();
             paths.getPaths().forEach(path -> {
                 try {
                     File file = new File(path);
@@ -89,10 +100,8 @@ public class MainController implements Initializable {
                     menu.setText(file.getName());
                     menu.setOnAction(this::onMenuAction);
                     File_OpenRecent.getItems().add(menu);
-                    file_list.clear();
                     file_list.add(file);
 
-                    System.out.println(file);
 
                 } catch (Exception e) {
                     //TODO Remove from list/use backup

@@ -18,12 +18,21 @@ public class FileHelper{
     private Properties prop;
     private List<String> path;
 
-    public static File chooseFile(){
+    public static File chooseFile() {
         FileChooser finder = new FileChooser();
         finder.setTitle("Open File...");
         finder.setInitialDirectory(new File("C://"));
         finder.setInitialFileName("Untitled.json");
-        finder.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("JSON File", "*.json"));
+        finder.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File", "*.json"));
         return finder.showOpenDialog(new Stage());
+    }
+
+    public static File saveFile() {
+        FileChooser finder = new FileChooser();
+        finder.setTitle("Open File...");
+        finder.setInitialDirectory(new File("C://"));
+        finder.setInitialFileName("Untitled.json");
+        finder.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File", "*.json"));
+        return finder.showSaveDialog(new Stage());
     }
 }

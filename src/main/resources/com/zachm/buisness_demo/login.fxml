@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="153.0" prefWidth="450.0" style="-fx-background-color: #363537;">
+         <children>
+            <Label layoutX="112.0" layoutY="55.0" text="Ordering Software" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Black" size="32.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="57.0" fitWidth="56.0" layoutX="47.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@puzzle-4-512.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="449.0" prefWidth="450.0">
+         <children>
+            <Pane prefHeight="11.0" prefWidth="450.0" style="-fx-background-color: #33DBD2;" />
+            <AnchorPane layoutX="50.0" layoutY="67.0" prefHeight="57.0" prefWidth="350.0">
+               <children>
+                  <TextField prefHeight="57.0" prefWidth="350.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="50.0" layoutY="159.0" prefHeight="57.0" prefWidth="350.0">
+               <children>
+                  <TextField prefHeight="57.0" prefWidth="350.0" />
+               </children>
+            </AnchorPane>
+            <Label layoutX="50.0" layoutY="216.0" text="Forgot Password?" />
+            <AnchorPane layoutX="50.0" layoutY="341.0" prefHeight="57.0" prefWidth="350.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="350.0" text="Button" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

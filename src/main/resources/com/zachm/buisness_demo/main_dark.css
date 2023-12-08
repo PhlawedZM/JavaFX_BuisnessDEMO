@@ -1,22 +1,46 @@
 .root {
-
+    -fx-base: #363537;
 }
+.text {
+    -fx-fill: #cbced4;
+}
+
+
+//MENU
 .menu-bar {
-    -fx-background-color: #202324;
+    -fx-background-color: #363537;
+}
+.menu-item {
+    -fx-background-color: #363537;
+}
+.menu {
+    -fx-background-color: #363537;
+}
+.menu:hover {
+    -fx-background-color: #4c4c4f;
+}
+.menu-item:hover {
+    -fx-background-color: #4c4c4f;
+}
+.context-menu {
+    -fx-background-color: #363537;
 }
 
+
+//TAB
 .tab-pane {
-    -fx-background-color: #313436;
+    -fx-background-color: #363537;
 }
-
 .tab-header-background {
-    -fx-background-color: #3a3c3d;
+    -fx-background-color: #262629;
 }
 .tab {
-    -fx-background-color: #EF2D56;
+    -fx-background-color: #363537;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 .tab:hover {
-    -fx-background-color: #768185;
+    -fx-background-color: #4c4c4f;
 }
 .tab-label {
     -fx-text-fill: white;
@@ -24,5 +48,22 @@
     -fx-font-family: 'Montserrat';
 }
 .tab:selected {
-    -fx-background-color: #768185;
+    -fx-background-color: #4c4c4f;
+    -fx-border-color: #4c4c4f;
+}
+
+//TABLE
+.table-column {
+    -fx-background-color: #262629;
+    -fx-focus-color: #33DBD2;
+}
+.table-cell {
+    -fx-background-color: #4c4c4f;
+    -fx-focus-color: #33DBD2;
+}
+.table-cell:hover {
+    -fx-background-color: #363537;
+}
+.table-view {
+    -fx-background-color: #4c4c4f;
 }
