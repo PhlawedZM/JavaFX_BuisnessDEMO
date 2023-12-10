@@ -11,7 +11,16 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+/**
+ * Utility class for Jackson's json
+ * Should be plug and play for the most part
+ * Created 12/10/23
+ *
+ * @author Zachary Martinson
+ */
 
 public class JsonHelper {
 
@@ -22,17 +31,20 @@ public class JsonHelper {
      * Ideally this would be made automatic through a database online
      * You can do this by connecting with JDBC and then connecting with ObjectMapper.ReadTree(URL);
      */
-    public static List<Product> readOrderJson(File file){
-        //TODO Make backup files incase they click wrong file.
-        List<Product> list = new ArrayList<>();
+    public static <T> List<T> readJsonList(File file, Class<T> clazz) {
+        //Make Backup Files Here
+        List<T> list = new ArrayList<>();
         ObjectMapper map = new ObjectMapper();
 
         try {
             JsonNode node = map.readTree(file);
+            if(!node.isArray()) {
+
+            }
             node.forEach(jsonNode -> {
                 JsonParser parser = jsonNode.traverse();
                 try {
-                    list.add(map.readValue(parser, Product.class));
+                    list.add(map.readValue(parser, clazz));
                     parser.close();
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
@@ -42,6 +54,34 @@ public class JsonHelper {
             System.out.println(e.getMessage());
         }
         return list;
+    }
+    public static <T> T readJsonObject(File file, Class<T> clazz) {
+        //Make Backup Files Here
+        ObjectMapper map = new ObjectMapper();
+
+        try {
+            JsonNode node = map.readTree(file);
+            if(node.isObject()) {
+                return map.readValue(file, clazz);
+            }
+
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Writes a json file.
+     */
+    public static <T> void writeJson(File file, List<T> list) {
+        ObjectMapper map = new ObjectMapper();
+        try {
+            map.writerWithDefaultPrettyPrinter().writeValue(file, list);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -55,11 +95,7 @@ public class JsonHelper {
         list.add(new Product("Valrhona", "Chocolate 15pc 65%", 35, 2, 0, 7));
         list.add(new Product("Coors", "Coors Lite 8pck", 4, 21, 0, 7));
 
-        try{
-            map.writer().withDefaultPrettyPrinter().writeValue(file,list);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        writeJson(file, list);
     }
 
     /**
@@ -70,15 +106,22 @@ public class JsonHelper {
      */
     public static void writeFilePathJson(File file){
         ObjectMapper map = new ObjectMapper();
-        FilePath paths = readFilePathJson();
+        FilePath paths;
 
+        if(!path_file.exists()) {
+            createPathFile();
+        }
         if(path_file.exists()){
+            paths = readJsonObject(path_file, FilePath.class);
 
-            //Check if file isn't empty.
-            if (!paths.containsPaths()) {
+            //Check if the file has any paths/if the file is bad
+            //TODO Write a way to avoid this null
+            if(paths == null) {
                 List<String> list = new ArrayList<>();
-                paths.setPaths(list);
-                paths.getPaths().add(file.getPath());
+                list.add(file.getPath());
+                FilePath new_paths = new FilePath();
+                new_paths.setPaths(list);
+                paths = new_paths;
             }
 
             //Check if file doesn't already have it.
@@ -94,7 +137,7 @@ public class JsonHelper {
             }
 
             //Lastly just replaces the index.
-            //Note that we don't need to use a for loop thinks to how ArrayList<> works.
+            //Note that we don't need to use a for loop thanks to how ArrayList<> works.
             else {
                 paths.getPaths().remove(file.getPath());
                 paths.getPaths().add(0, file.getPath());
@@ -106,34 +149,6 @@ public class JsonHelper {
                 System.out.println(e.getMessage());
             }
         }
-    }
-
-    /**
-     * Reads the FilePath Json File
-     * We access this a lot for memory of Open Recent...
-     */
-    public static FilePath readFilePathJson(){
-        ObjectMapper map = new ObjectMapper();
-        FilePath paths = new FilePath();
-        List<String> list = new ArrayList<>();
-
-        if(!path_file.exists()) {
-            createPathFile();
-        }
-        if(path_file.length() < 1) {
-            return paths;
-        }
-        else
-        {
-            try{
-                paths = map.readValue(path_file, FilePath.class);
-            }
-            catch(IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        return paths;
     }
 
     /**

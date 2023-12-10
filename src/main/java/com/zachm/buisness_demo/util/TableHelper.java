@@ -10,6 +10,7 @@ import javafx.util.converter.IntegerStringConverter;
 public class TableHelper {
 
     /**
+     * @author Zachary Martinson
      * Sets the cells for our tables.
      * We can use raw forms of TableView and TableColumn here, but I don't want to throw exceptions if I can avoid it
      */

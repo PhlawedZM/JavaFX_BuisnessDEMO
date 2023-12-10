@@ -3,11 +3,16 @@ package com.zachm.buisness_demo;
 import com.zachm.buisness_demo.util.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.util.Callback;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
@@ -15,12 +20,20 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class MainController implements Initializable {
-
+    @FXML
+    Button Button_Hide;
+    @FXML
+    Button Button_Minimize;
+    @FXML
+    Button Button_Close;
     @FXML
     MenuItem File_Open;
     @FXML
     Menu File_OpenRecent;
-
+    @FXML
+    MenuItem File_Quit;
+    @FXML
+    HBox HBox_Main;
     @FXML
     TabPane Tab_Pane;
     @FXML
@@ -40,6 +53,8 @@ public class MainController implements Initializable {
     @FXML
     TableColumn<Product, Integer> Monday_Order;
 
+    private Image closeIcon = new Image(MainApplication.class.getResource("close-96.png").toExternalForm());
+
 
     private final List<File> file_list = new ArrayList<>();
     private List<Product> list = new ArrayList<>();
@@ -54,7 +69,10 @@ public class MainController implements Initializable {
         initializeTables();
         initializeMenus();
         initializeTabs();
+
+        ResizeHelper.setDragFilter(HBox_Main);
     }
+
 
     /**
      * Where we up our tables
@@ -89,9 +107,10 @@ public class MainController implements Initializable {
     public void updateOpenRecent() {
         File_OpenRecent.getItems().clear();
 
-        FilePath paths = JsonHelper.readFilePathJson();
+        FilePath paths = JsonHelper.readJsonObject(MainApplication.path_file, FilePath.class);
 
-        if(paths.containsPaths()) {
+
+        if (paths != null && paths.containsPaths()) {
             file_list.clear();
             paths.getPaths().forEach(path -> {
                 try {
@@ -129,6 +148,10 @@ public class MainController implements Initializable {
      * This event gets fired whenever we use a menu item
      */
     public void onMenuAction(ActionEvent event) {
+        if(event.getSource() == File_Quit) {
+            close();
+        }
+
         if(event.getSource() == File_Open) {
             list.clear();
             File file = FileHelper.chooseFile();
@@ -137,7 +160,7 @@ public class MainController implements Initializable {
             //Adds the file to memory
             if(file != null) {
                 JsonHelper.writeFilePathJson(file);
-                list = JsonHelper.readOrderJson(file);
+                list = JsonHelper.readJsonList(file, Product.class);
             }
 
             Tab tab = Tab_Pane.getSelectionModel().getSelectedItem();
@@ -166,7 +189,7 @@ public class MainController implements Initializable {
                 file_list.forEach(file -> {
                     if(file.getName().equals(menu.getText())) {
                         list.clear();
-                        list = JsonHelper.readOrderJson(file);
+                        list = JsonHelper.readJsonList(file, Product.class);
 
                         //TEMP CODE
                         ObservableList<Product> table_list = Monday_TableView.getItems();
@@ -177,5 +200,29 @@ public class MainController implements Initializable {
                 });
             }
         }
+    }
+
+    /**
+     * Fires when a button is clicked
+     * Logic for recreating the standard utility buttons for every system
+     */
+    public void onButtonAction(ActionEvent event) {
+        if(event.getSource() == Button_Close) {
+            close();
+        }
+        if(event.getSource() == Button_Minimize) {
+            Stage stage = (Stage) Button_Minimize.getScene().getWindow();
+            stage.setMaximized(!stage.isMaximized());
+        }
+        if(event.getSource() == Button_Hide) {
+            Stage stage = (Stage) Button_Hide.getScene().getWindow();
+            stage.setIconified(true);
+        }
+    }
+
+    public void close() {
+        //TODO Add backups/maybe a stage where i ask them if they want to save/etc...
+        Stage stage = (Stage) Tab_Pane.getScene().getWindow();
+        stage.close();
     }
 }

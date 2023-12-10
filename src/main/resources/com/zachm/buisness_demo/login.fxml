@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,42 +11,52 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zachm.buisness_demo.LoginController">
    <children>
-      <AnchorPane prefHeight="153.0" prefWidth="450.0" style="-fx-background-color: #363537;">
+      <AnchorPane prefHeight="131.0" prefWidth="350.0" style="-fx-background-color: #363537;" stylesheets="@login.css">
          <children>
-            <Label layoutX="112.0" layoutY="55.0" text="Ordering Software" textFill="WHITE">
+            <Label fx:id="Label_Company" layoutX="84.0" layoutY="32.0" text="Ordering Software" textFill="WHITE">
                <font>
-                  <Font name="Segoe UI Black" size="32.0" />
+                  <Font name="Segoe UI Historic" size="28.0" />
                </font>
             </Label>
-            <ImageView fitHeight="57.0" fitWidth="56.0" layoutX="47.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="66.0" fitWidth="49.0" layoutX="27.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@puzzle-4-512.png" />
+                  <Image url="@jigsaw.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="449.0" prefWidth="450.0">
+      <AnchorPane prefHeight="472.0" prefWidth="350.0" stylesheets="@login.css">
          <children>
-            <Pane prefHeight="11.0" prefWidth="450.0" style="-fx-background-color: #33DBD2;" />
-            <AnchorPane layoutX="50.0" layoutY="67.0" prefHeight="57.0" prefWidth="350.0">
-               <children>
-                  <TextField prefHeight="57.0" prefWidth="350.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="50.0" layoutY="159.0" prefHeight="57.0" prefWidth="350.0">
-               <children>
-                  <TextField prefHeight="57.0" prefWidth="350.0" />
-               </children>
-            </AnchorPane>
-            <Label layoutX="50.0" layoutY="216.0" text="Forgot Password?" />
-            <AnchorPane layoutX="50.0" layoutY="341.0" prefHeight="57.0" prefWidth="350.0">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="350.0" text="Button" />
-               </children>
-            </AnchorPane>
+            <Pane prefHeight="8.0" prefWidth="350.0" style="-fx-background-color: #33DBD2;" />
+            <TextField fx:id="TF_Username" layoutX="58.0" layoutY="78.0" onAction="#onTextAction" onKeyTyped="#onTextKeyAction" prefHeight="46.0" prefWidth="235.0" promptText="Username">
+               <font>
+                  <Font name="Segoe UI Semibold" size="13.0" />
+               </font>
+            </TextField>
+            <ImageView fx:id="Icon_Person" fitHeight="29.0" fitWidth="27.0" layoutX="256.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@contacts-512-g.png" />
+               </image>
+            </ImageView>
+            <PasswordField fx:id="TF_Password" layoutX="58.0" layoutY="148.0" onKeyTyped="#onTextKeyAction" prefHeight="46.0" prefWidth="235.0" promptText="Password">
+               <font>
+                  <Font name="Segoe UI Semibold" size="13.0" />
+               </font>
+            </PasswordField>
+            <ImageView fx:id="Icon_Lock" fitHeight="30.0" fitWidth="30.0" layoutX="255.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@padlock-512-g.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="Label_Forgot" layoutX="58.0" layoutY="200.0" text="Forgot Password?" />
+            <Button fx:id="Button_Login" layoutX="58.0" layoutY="378.0" mnemonicParsing="false" onAction="#onButtonAction" prefHeight="46.0" prefWidth="235.0" text="Enter" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Historic" size="15.0" />
+               </font>
+            </Button>
+            <Label fx:id="Label_Admin" layoutX="117.0" layoutY="355.0" text="Contact Administrator" />
          </children>
       </AnchorPane>
    </children>

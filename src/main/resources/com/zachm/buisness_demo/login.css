@@ -1,0 +1,22 @@
+.button:hover {
+    -fx-background-color: #12fc85;
+}
+.button {
+    -fx-background-color: #0be375;
+}
+
+#Label_Forgot {
+    -fx-text-fill: black;
+}
+#Label_Forgot:hover {
+    -fx-text-fill: #0096db;
+}
+#Label_Admin {
+    -fx-text-fill: black;
+}
+#Label_Admin:hover {
+    -fx-text-fill: #0096db;
+}
+#Label_Company {
+    -fx-text-fill: white;
+}

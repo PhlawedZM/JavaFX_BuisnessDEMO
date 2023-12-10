@@ -7,6 +7,15 @@
 
 
 //MENU
+.tool-bar {
+    -fx-background-color: #363537;
+}
+.hbox {
+    -fx-background-color: #363537;
+}
+.pane {
+    -fx-background-color: #363537;
+}
 .menu-bar {
     -fx-background-color: #363537;
 }
@@ -24,6 +33,18 @@
 }
 .context-menu {
     -fx-background-color: #363537;
+}
+
+
+//Button
+.button {
+    -fx-background-color: #363537;
+}
+.button:hover {
+    -fx-background-color: #4c4c4f;
+}
+#Button_Close:hover {
+    -fx-background-color: red;
 }
 
 

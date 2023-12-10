@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,17 +18,19 @@ import java.util.Objects;
 public class MainApplication extends Application {
 
     public static File directory = new File("data");
+    public static final File path_file = new File(MainApplication.directory.getAbsolutePath() + "/files.json");
 
     /**
      * Application class, this is our main class.
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxml = new FXMLLoader(MainApplication.class.getResource("main.fxml"));
+        FXMLLoader fxml = new FXMLLoader(MainApplication.class.getResource("login.fxml"));
         Scene scene = new Scene(fxml.load());
-        scene.getStylesheets().add(MainApplication.class.getResource("main_dark.css").toExternalForm());
-        stage.setTitle("Order App");
+        scene.getStylesheets().add(MainApplication.class.getResource("login.css").toExternalForm());
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setResizable(false);
         stage.show();
 
 
@@ -36,9 +39,6 @@ public class MainApplication extends Application {
             createDirectory();
         }
         //JsonHelper.createTestOrderJson();
-
-    }
-    public void onResize(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
 
     }
 
